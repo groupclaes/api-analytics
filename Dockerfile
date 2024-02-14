@@ -27,7 +27,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 
 # install node packages
-RUN npm install
+RUN npm install --omit=dev
 
 
 # --- release ---
