@@ -47,13 +47,13 @@ export default async function (fastify: FastifyInstance) {
       const repo = new Analytics(request.log, pool)
 
       const result = await repo.listDashboard() // request.jwt.sub
-      return reply.success(result, 200, performance.now() - start)
-      // if (result.verified) {
-      //   if (result.error) return reply.error(result.error, 500, performance.now() - start)
+      if (result)
+        // if (result.verified) {
+        //   if (result.error) return reply.error(result.error, 500, performance.now() - start)
 
-      //   return reply.success(result.result, 200, performance.now() - start)
+        return reply.success(result.result, 200, performance.now() - start)
       // }
-      // return reply.error('Session has expired!', 401, performance.now() - start)
+      return reply.error('Session has expired!', 401, performance.now() - start)
     } catch (err) {
       request.log.error({ err }, 'failed to get analytics dashboard!')
       return reply.error('failed to get analytics dashboard!', 500, performance.now() - start)
