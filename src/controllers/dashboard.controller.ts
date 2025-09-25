@@ -21,12 +21,12 @@ declare module 'fastify' {
   }
 }
 
-export default async function (fastify: FastifyInstance) {
+export default async function(fastify: FastifyInstance) {
   /**
    * Get analytics dashboard from DB
    * @route GET /{APP_VERSION}/analytics/dashboard
    */
-  fastify.get('', async function (request: FastifyRequest<{
+  fastify.get('', async function(request: FastifyRequest<{
     Querystring: {
       company: 'DIS' | 'BRA'
     }
@@ -48,10 +48,10 @@ export default async function (fastify: FastifyInstance) {
 
       const result = await repo.listDashboard() // request.jwt.sub
 
-      if (result.verified) {
-        if (result.error) return reply.error(result.error, 500, performance.now() - start)
+      if (result) {
+        // if (result.error) return reply.error(result.error, 500, performance.now() - start)
 
-        return reply.success(result.result, 200, performance.now() - start)
+        return reply.success(result, 200, performance.now() - start)
       }
       return reply.error('Session has expired!', 401, performance.now() - start)
     } catch (err) {
